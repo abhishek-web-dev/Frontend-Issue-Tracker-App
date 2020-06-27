@@ -1,0 +1,35 @@
+/* title font css */
+.title-font {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+}
+.sub-title-font {
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+}
+
+.example-card {
+  max-width: 700px;
+}
+
+.status-span {
+  padding: 5px 8px;
+  border-radius: 5px;
+  color: white;
+}
+
+#status-backlog {
+  background-color: #ff4800;
+}
+
+#status-progress {
+  background-color: #f147f6;
+}
+
+#status-test {
+  background-color: #ef820d;
+}
+
+#status-done {
+  background-color: #5ec26b;
+}

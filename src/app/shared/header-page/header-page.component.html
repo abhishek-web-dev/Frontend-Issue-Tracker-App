@@ -1,0 +1,90 @@
+<nav class="navbar navbar-expand-lg navbar-light" id="header">
+  <a class="navbar-brand text-white">{{userName}}</a>
+  <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse main-div" id="navbarNavAltMarkup" style="margin-left: 55%;">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active mr-4" routerLink="/dashboard">
+        <mat-icon class="icons ml-1">home</mat-icon><br>
+        <span class="text-white">Home</span>
+        <span class="sr-only">(current)</span>
+      </a>
+
+      <a class="nav-item nav-link mr-4" routerLink="watchlist">
+        <mat-icon class="icons ml-3">playlist_add</mat-icon><br>
+        <span class="text-white">WatchList</span>
+      </a>
+
+      <!-- this template for notification -->
+      <ng-template #popContent>
+
+        <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport ">
+          <div *cdkVirtualFor="let data of allNotificationData" class="example-item ">
+
+            <a (click)="markSeenNoti(data.notificationId,data.userWatchlistIds)"
+              [routerLink]="['edit/issue',data.queryId]" style="text-decoration: none;">
+              <div class="card my-2 noti-item" style="border: 1px solid #b2bec3;">
+
+                <div class="card-body">
+                  <blockquote class="blockquote mb-0 " style="text-align: justify;color: black;">
+                    <p style="font-size: 90%;"><b>{{'"' + data.title + '"'}}</b> this query has {{data.message}} </p>
+                    <footer class="blockquote-footer" style="font-size: 80%;">BY
+                      <cite title="Source Title">{{data.modifiedPersonName}}</cite>
+                    </footer>
+                  </blockquote>
+                </div>
+
+                <div class=" text-muted row ml-1">
+                  <div class="col-8">
+                    <mat-icon class="material-icons time-icon">access_time</mat-icon>
+                    <span style="font-size: 120%;" class="ml-1">
+                      {{data.createdOn| amFromUtc | amDateFormat:'MMMM Do YYYY, h:mm a' }}</span>
+                  </div>
+                  <div class="col-4 mb-2">
+                    <ng-container *ngFor="let item of data.userWatchlistIds">
+                      <div *ngIf="userId === item.userId">
+                        <ng-container *ngIf="item.seen == true">
+                          <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                            <mat-icon>done</mat-icon>
+                          </button>
+                        </ng-container>
+                        <ng-container *ngIf="item.seen == false">
+                          <button mat-mini-fab disabled aria-label="Example icon button with a home icon">
+                            <mat-icon>done</mat-icon>
+                          </button>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+
+                  </div>
+                </div>
+
+              </div>
+            </a>
+
+          </div>
+
+        </cdk-virtual-scroll-viewport>
+
+        <div class="text-center" style="background-color: #bdbdbd;">
+          <a routerLink="all/notifications" style="font-size: 130%;text-decoration: none;">See All</a>
+        </div>
+      </ng-template>
+
+      <a class="nav-item nav-link mr-4" type="button" [ngbPopover]="popContent" (click)="getAllNotification()"
+        [autoClose]="true">
+        <mat-icon class="icons ml-3" [matBadge]="unReadNotif" matBadgeColor="warn">notifications_active</mat-icon><br>
+        <span class="text-white">Notification</span>
+      </a>
+
+      <a class="nav-item nav-link" routerLink="/" (click)="logout()">
+        <mat-icon class="icons ml-1">exit_to_app</mat-icon><br>
+        <span class="text-white">Logout</span>
+      </a>
+
+    </div>
+  </div>
+</nav>

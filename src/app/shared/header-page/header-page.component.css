@@ -1,0 +1,65 @@
+/* extending bootstrap class */
+.navbar-brand {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+}
+.text-white {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+}
+
+#header {
+  background-color: #2d3748;
+  color: white;
+}
+
+.icons {
+  color: white;
+  font-size: 180%;
+}
+
+.time-icon {
+  font-size: 120%;
+}
+
+.done-icon {
+  font-size: 150%;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.example-viewport {
+  height: 550px;
+  width: 260px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.example-item {
+  height: 100%;
+  width: 100%;
+}
+
+.popover-body {
+  width: 350px;
+  height: 550px;
+}
+
+.example-viewport::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+}
+
+/* notification item color change when mouse hover */
+.noti-item:hover,
+.list-group-item-action:hover {
+  /* color: #59b612; */
+  background-color: #e0e0e0;
+}
+
+/*set query item bg color */
+.list-group-item-action {
+  color: black;
+}

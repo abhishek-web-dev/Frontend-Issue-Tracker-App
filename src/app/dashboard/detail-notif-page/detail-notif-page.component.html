@@ -1,0 +1,72 @@
+<!-- infinite scroll div -->
+<div class="container mt-2" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+  (scrolled)="onScroll()">
+
+
+  <div *ngFor="let data of allNotificationData" class="py-3">
+    <div class="card text-white" style="background-color: #075E54;">
+      <div class="card-header row" style="font-size: 170%;">
+        <div class="col-10 col-md-11 text-center">
+          <a [routerLink]="['./../../edit/issue',data.queryId]" (click)="markSeenNoti(data.notificationId,data.userWatchlistIds)"
+            style="text-decoration: none;color: #eeeeee;font-weight: 400;font-family: 'Merriweather', serif;font-style: italic;"
+             class="pt-1">
+            Title -{{data.title}}</a>
+        </div>
+        <div class="col-2 col-md-1">
+          <ng-container *ngFor="let item of data.userWatchlistIds">
+            <div *ngIf="userId === item.userId">
+              <ng-container *ngIf="item.seen == true">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="item.seen == false">
+                <button mat-mini-fab style="background-color: #ECE5DD;"
+                  aria-label="Example icon button with a home icon">
+                  <mat-icon style="color: black;">done</mat-icon>
+                </button>
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+      <div class="card-body">
+
+        <blockquote class="blockquote mb-0"
+          style="font-weight: 300;font-family: 'Merriweather', serif;font-style: italic;font-size: 150%;">
+          <p style="color: #eeeeee;">
+            This Query has {{data.message}}.</p>
+          <footer class="blockquote-footer " style="color: #C5C6C7;">BY
+            <cite title="Source Title">{{data.modifiedPersonName}}</cite>
+          </footer>
+        </blockquote>
+      </div>
+      <div class="card-footer text-right mr-2">
+        <mat-icon class="material-icons mr-2" style="font-size: 110%;">access_time</mat-icon>
+        <small style="color: #C5C6C7;font-size: 115%;">
+          {{data.createdOn | amFromUtc | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</small>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- sinner -->
+  <div style="margin-top: 2%;">
+    <div class="col">
+      <ngx-spinner bdOpacity=0.9 bdColor="" size="medium" color="#fff" type="ball-pulse-sync" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
+    </div>
+  </div>
+
+  <!-- Alert no more post -->
+  <div class="row pb-5" *ngIf="!notEmptyPost">
+    <div class="col-md-12 d-flex justify-content-center">
+      <div class="text-black h6-alert alert-secondary p-2 "> No More Notification To Show</div>
+    </div>
+  </div>
+
+</div>
+<!-- infinity scroll div end -->

@@ -1,0 +1,193 @@
+<div id="main-div" class="mt-4 pb-5">
+
+  <section class="container  mb-4">
+    <div class="row">
+
+      <!-- in backlog start -->
+      <div class="col-12 col-lg-3 col-md-6 col-sm-6">
+        <div class="col-div mt-lg-0 mt-sm-1">
+          <div class="row">
+            <div class="col-5">
+              <div id="inner-div-backlog" class="inner-div">
+                <mat-icon class="material-icons color_white">priority_high</mat-icon>
+              </div>
+            </div>
+            <div class="col-7 mt-4">
+              <span class="col-span-number"><b>{{inBacklog}}</b></span> <br>
+              <span class="col-span-name mt-3">In Backlog</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- in progress start -->
+      <div class="col-12 col-lg-3 col-md-6 col-sm-6">
+        <div class=" col-div mt-lg-0 mt-sm-1">
+          <div class="row">
+            <div class="col-5">
+              <div id="inner-div-progress" class="inner-div">
+                <mat-icon class="material-icons color_white">update</mat-icon>
+              </div>
+            </div>
+            <div class="col-7 mt-4">
+              <span class="col-span-number"><b>{{inProgress}}</b></span> <br>
+              <span class="col-span-name mt-3">In Progress</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- in test start -->
+      <div class="col-12 col-lg-3 col-md-6 col-sm-6">
+        <div class="col-div mt-lg-0 mt-sm-1">
+          <div class="row">
+            <div class="col-5">
+              <div id="inner-div-test" class="inner-div">
+                <mat-icon class="material-icons color_white">build_circle</mat-icon>
+              </div>
+            </div>
+            <div class="col-7 mt-4">
+              <span class="col-span-number"><b>{{inTest}}</b></span> <br>
+              <span class="col-span-name mt-3">In Test</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- in done start -->
+      <div class="col-12 col-lg-3 col-md-6 col-sm-6">
+        <div class="mt-lg-0 mt-sm-1  col-div">
+          <div class="row">
+            <div class="col-5">
+              <div id="inner-div-done" class="inner-div">
+                <mat-icon class="material-icons color_white">done</mat-icon>
+              </div>
+            </div>
+            <div class="col-7 mt-4">
+              <span class="col-span-number"><b>{{inDone}}</b></span> <br>
+              <span class="col-span-name mt-3">Done</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- table start -->
+
+  <section class="container">
+
+    <ng-container>
+
+      <div id="filter-div" class="row ">
+
+        <div class="col-10 ">
+
+          <mat-form-field id="filter-form">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Enter...">
+          </mat-form-field>
+
+          <ng-template #popContentYourQuery1>
+            <button mat-raised-button class="check-box-hover">
+              <mat-checkbox [checked]="queryAssignToYou" (change)="onCheckbox1($event)">
+                Query Assign To You!
+              </mat-checkbox>
+            </button><br>
+            <button mat-raised-button class="check-box-hover my-1">
+              <mat-checkbox [checked]="queryCreatedByYou" (change)="onCheckbox2($event)">
+                Query Ctreated By You!
+              </mat-checkbox>
+            </button><br>
+            <button mat-raised-button class="check-box-hover">
+              <mat-checkbox [checked]="queryAll" (change)="onCheckbox3($event)">
+                All Query!</mat-checkbox>
+            </button>
+          </ng-template>
+
+          <a class="ml-2  btn btn-dark" style="height: 45px;width: 60px;" type="button"
+            [ngbPopover]="popContentYourQuery1" [autoClose]="false">
+            <mat-icon class=" p-1 mr-1" style="color: white;">filter_list</mat-icon>
+          </a>
+
+        </div>
+
+        <div class="col-2">
+          <div id="create-issue">
+            <a routerLink="create/issue">
+              <mat-icon class="create-issue-icon">add</mat-icon>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="table-height" *ngIf="allQuery.length !== 0; else loadingFacultyData">
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- Title Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+          </ng-container>
+
+          <!-- Reporter Column -->
+          <ng-container matColumnDef="creatorName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Creator Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.creatorName}} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let element">
+              <span [ngSwitch]="element.status">
+                <span *ngSwitchCase="'Backlog'" class="status-span" id="status-backlog">
+                  {{element.status}}</span>
+                <span *ngSwitchCase="'In-Progress'" class="status-span" id="status-progress">
+                  {{element.status}}</span>
+                <span *ngSwitchCase="'In-Test'" class="status-span" id="status-test">
+                  {{element.status}}</span>
+                <span *ngSwitchCase="'Done'" class="status-span" id="status-done">
+                  {{element.status}}</span>
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- CreatedOn Column -->
+          <ng-container matColumnDef="createdOn">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdOn | date}} </td>
+          </ng-container>
+
+          <!-- CreatedOn Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef> Select </th>
+            <td mat-cell *matCellDef="let element">
+              <span><a mat-button (click)="openDialog(element.select)" class="viewDelHover">View</a></span> |
+              <span>
+                <a mat-button [routerLink]="['edit/issue',element.select]" class="viewDelHover"
+                  style="text-decoration: none;">
+                  Edit
+                </a>
+              </span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </ng-container>
+
+    <ng-template #loadingFacultyData>
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
+    </ng-template>
+  </section>
+
+</div>

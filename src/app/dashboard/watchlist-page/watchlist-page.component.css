@@ -1,0 +1,129 @@
+#section2 {
+  width: 100%;
+  margin: 2% 0px;
+}
+
+.col-div {
+  margin: 0px 10px;
+  background-color: #ecf8f8;
+  width: 200px;
+  height: 100px;
+  border-radius: 4px;
+}
+
+.inner-div {
+  width: 60px;
+  height: 60px;
+  margin-top: 15px;
+  margin-left: 15px;
+  border-radius: 5px;
+}
+
+/* in backlog start  */
+#inner-div-backlog {
+  /* background-image: linear-gradient(170deg, #ff4800 , #FFF5EA ); */
+  background-color: #ff4800;
+}
+
+/* in backlog start  */
+#inner-div-progress {
+  background-color: #f147f6;
+  /* background-color:#DC8EAA; */
+}
+
+/* in backlog start  */
+#inner-div-test {
+  background-color: #ef820d;
+}
+
+/* in backlog start  */
+#inner-div-done {
+  background-color: #5ec26b;
+}
+
+.material-icons.color_white {
+  color: white;
+  font-size: 50px;
+  margin-left: 2px;
+}
+
+.col-span-number {
+  font-size: 160%;
+  font-weight: 400;
+}
+
+.col-span-name {
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-size: 110%;
+}
+
+/* table style start */
+table {
+  width: 100%;
+}
+
+#filter-div {
+  width: 100%;
+  background-color: white;
+  padding-top: 10px;
+  border-radius: 2px;
+  margin: 0px;
+}
+
+#filter-form {
+  width: 75%;
+  margin-left: 12%;
+}
+
+@media (max-width: 575px) {
+  .col-div {
+    width: 80%;
+  }
+  .col-12 {
+    margin-left: 7%;
+    margin-top: 4px;
+  }
+}
+
+/* for loading */
+.spinner {
+  margin-left: 40%;
+  margin-top: 10%;
+  height: 300px;
+  /* background-color: white; */
+}
+
+/* change bg of edit and delete option on hover */
+.viewHover:hover {
+  background-color: #5ec26b;
+  color: white;
+}
+
+.delHover:hover {
+  background-color: #c62828;
+  color: white;
+}
+
+/* for status bg color */
+.status-span {
+  padding: 5px 8px;
+  border-radius: 5px;
+  color: white;
+}
+
+#status-backlog {
+  background-color: #ff4800;
+}
+
+#status-progress {
+  background-color: #f147f6;
+}
+
+#status-test {
+  background-color: #ef820d;
+}
+
+#status-done {
+  background-color: #5ec26b;
+}

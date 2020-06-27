@@ -1,0 +1,152 @@
+<div class="main-div">
+
+  <!-- edit form section has started -->
+  <section class="container">
+    <h2 class="pb-2 text-white mt-4 text-center" style="font-size:200%;">
+      Edit An Issue
+    </h2>
+    <mat-card id="form-div">
+      <form id="issue-form" [formGroup]="updateNewIssueForm" (ngSubmit)="onSubmit(updateNewIssueForm)">
+
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" formControlName="title" placeholder="Enter Name">
+
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <angular-editor formControlName="description" [config]="config"></angular-editor>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+
+          <select class="custom-select my-1 mr-sm-2" id="status" formControlName="status">
+            <option *ngFor="let status of allStatus" [value]="status">{{status}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Assign To</label>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" style="width: 100%;" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Select one option
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 100%;">
+              <a class="dropdown-item" *ngFor="let data of allUsersId" (click)="selectReciever(data)">{{data.name}}</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Apload Image</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" (change)="onFileSelect($event)">
+            <label class="custom-file-label" for="customFile">{{fileInputLabel || 'Choose File'}}</label>
+          </div>
+        </div>
+
+        <div class="mt-4 row">
+
+          <div class="col-6 col-sm-4 col-md-2">
+            <button mat-raised-button class="bg-dark text-white py-1 px-4" (click)="goBack()"
+              matTooltip="Go to previous page!">
+              Back
+            </button>
+          </div>
+
+          <div class="col-6 col-sm-4 col-md-2">
+            <button mat-raised-button color="primary" class="py-1 px-4" (click)="changeEditButton()"
+              [disabled]="editButtonDisabled" matTooltip="Edit this query!">Edit</button>
+          </div>
+
+          <div class="col-6 col-sm-4 col-md-2">
+            <button mat-raised-button class="py-1 my-2 my-sm-0 px-4 bg-info" (click)="openDialog()"
+              matTooltip="View details of this Query!">View</button>
+          </div>
+
+          <div class="col-6 col-sm-6 col-md-2">
+            <button mat-raised-button [disabled]="deleteButton" color="warn" class="py-1 px-4 my-2 my-sm-2 my-md-0"
+              matTooltip="Click to delete this Query!" (click)="deleteQuery()">Delete</button>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4">
+            <button mat-raised-button color="accent" class="py-1 px-4 my-sm-2 my-md-0" (click)="addToWatchlist()"
+              matTooltip="Sucscribe to get notification!">Add To Your Watch List</button>
+          </div>
+
+        </div>
+
+      </form>
+
+    </mat-card>
+  </section>
+
+  <!-- chat section is starting-->
+  <section class="container ">
+
+    <mat-card id="form-div" style="margin-top: 50px;">
+
+      <h2 class="pb-2 text-black mt-2 ml-2 " style="font-size:200%;">
+        Post a Comment
+      </h2>
+
+      <form id="issue-form" [formGroup]="commentForm" (ngSubmit)="onComment(commentForm)">
+        <div class="form-row">
+          <div class="col-10">
+            <input type="text" class="form-control" id="title" formControlName="message" placeholder="Enter Message...">
+          </div>
+          <div class="col-2">
+            <button mat-raised-button class=" text-white px-4"
+              [ngStyle]="{'background-color':commentForm.valid ? '#2e7d32' : '#81c784'}"
+              [disabled]="!commentForm.valid">Post</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- comment message virtual scrolling start -->
+      <cdk-virtual-scroll-viewport itemSize="50" style="width: 100%;height: 500px;margin-top: 30px;">
+
+        <div *cdkVirtualFor="let data of allMessageData" class="example-item">
+          <div class="card text-white my-3"
+            style="background-color: #075E54;width: 96%;margin-left: auto;margin-right: auto;">
+            <div class="card-header"
+              style="font-size: 170%;color: #eeeeee;font-weight: 400;font-family: 'Merriweather', serif;font-style: italic;">
+              {{data.senderName}}
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p
+                  style="color: #eeeeee;font-weight: 300;font-family: 'Merriweather', serif;font-style: italic;font-size: 110%;">
+                  {{data.message}}</p>
+              </blockquote>
+            </div>
+            <div class="card-footer text-right mr-2">
+              <mat-icon class="material-icons mr-2" style="font-size: 110%;">access_time</mat-icon>
+              <small style="color: #C5C6C7;font-size: 115%;"> 
+                {{data.createdOn | amFromUtc | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
+                </small>
+            </div>
+          </div>
+        </div>
+
+      </cdk-virtual-scroll-viewport>
+
+      <!-- Alert no more post -->
+      <div class="row pt-3 ">
+        <div class="col-md-12 d-flex justify-content-center">
+          <div class="text-black h6-alert p-2 ">
+            <button class="load-more-message" (click)="getMoreData()" mat-raised-button>
+              Load More Messages
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </mat-card>
+  </section>
+
+  <div style="height: 50px;"></div>
+
+</div>
